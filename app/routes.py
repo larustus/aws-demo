@@ -9,7 +9,7 @@ bp = Blueprint("api", __name__)
 
 @bp.get("/health")
 def health():
-    return jsonify({"status": "ok, second test"})
+    return jsonify({"status": "ok, third test"})
 
 
 @bp.get("/comments")

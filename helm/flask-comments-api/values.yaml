@@ -5,7 +5,7 @@ app:
 
 image:
   repository: larustus/flask-comments-api
-  tag: "2.0"
+  tag: "3.0"
   pullPolicy: Always
 
 replicaCount: 1
