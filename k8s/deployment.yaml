@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-comments-api
+  namespace: flask-demo
+  labels:
+    app: flask-comments-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-comments-api
+  template:
+    metadata:
+      labels:
+        app: flask-comments-api
+    spec:
+      containers:
+        - name: flask-comments-api
+          image: larustus/flask-comments-api:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-comments-api-config
+                  key: DB_PATH
+          volumeMounts:
+            - name: sqlite-data
+              mountPath: /data
+      volumes:
+        - name: sqlite-data
+          persistentVolumeClaim:
+            claimName: flask-comments-api-data

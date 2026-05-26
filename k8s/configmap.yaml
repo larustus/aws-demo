@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-comments-api-config
+  namespace: flask-demo
+data:
+  DB_PATH: /data/comments.db

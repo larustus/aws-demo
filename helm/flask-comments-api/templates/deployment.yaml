@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name | quote }}
+  namespace: {{ .Values.namespace | quote }}
+  labels:
+    app: {{ .Values.app.name | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name | quote }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name | quote }}
+    spec:
+      containers:
+        - name: {{ .Values.app.name | quote }}
+          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - containerPort: {{ .Values.container.port }}
+          env:
+            - name: DB_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ printf "%s-config" .Values.app.name | quote }}
+                  key: DB_PATH
+{{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: sqlite-data
+              mountPath: {{ .Values.persistence.mountPath | quote }}
+      volumes:
+        - name: sqlite-data
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-data" .Values.app.name | quote }}
+{{- end }}
