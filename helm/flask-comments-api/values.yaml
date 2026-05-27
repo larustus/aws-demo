@@ -4,8 +4,8 @@ app:
   name: flask-comments-api
 
 image:
-  repository: larustus/flask-comments-api
-  tag: "3.0"
+  repository: 340528523115.dkr.ecr.eu-north-1.amazonaws.com/flask-comments-api
+  tag: "2.0"
   pullPolicy: Always
 
 replicaCount: 1
