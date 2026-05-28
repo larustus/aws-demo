@@ -1,0 +1,14 @@
+services:
+  flask-comments-api:
+    image: 340528523115.dkr.ecr.eu-north-1.amazonaws.com/flask-comments-api:349a9c5
+    container_name: flask-comments-api
+    ports:
+      - "5000:5000"
+    environment:
+      DB_PATH: /data/comments.db
+    volumes:
+      - flask-comments-data:/data
+    restart: unless-stopped
+
+volumes:
+  flask-comments-data:
